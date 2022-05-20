@@ -20,18 +20,7 @@
         "prettier": "^2.6.2"
     },
     "lint-staged": {
-        "**/*.php": [
-            "sh pre-commit.sh phpstan",
-            "sh pre-commit.sh prettify"
-        ],
-        "**/*.js": [
-            "sh pre-commit.sh prettify"
-        ],
-        "**/*.vue": [
-            "sh pre-commit.sh prettify"
-        ],
-        "**/*.css": [
-            "sh pre-commit.sh prettify"
-        ]
+        "**/*.{js,jsx,ts,tsx,html,css,php,vue}": "sh pre-commit.sh prettify",
+        "**/*.php": "sh pre-commit.sh phpstan"
     }
 }
