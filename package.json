@@ -21,8 +21,7 @@
     "lint-staged": {
         "**/*.php": [
             "sh pre-commit.sh phpstan",
-            "sh pre-commit.sh prettify",
-            "sh pre-commit.sh blast"
+            "sh pre-commit.sh prettify"
         ],
         "**/*.js": [
             "sh pre-commit.sh prettify"
