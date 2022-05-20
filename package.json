@@ -13,10 +13,11 @@
     "devDependencies": {
         "@prettier/plugin-php": "^0.18.4",
         "axios": "^0.21",
+        "husky": "^8.0.1",
         "laravel-mix": "^6.0.6",
+        "lint-staged": "^12.4.1",
         "postcss": "^8.1.14",
-        "prettier": "^2.6.2",
-        "husky": "^8.0.1"
+        "prettier": "^2.6.2"
     },
     "lint-staged": {
         "**/*.php": [
