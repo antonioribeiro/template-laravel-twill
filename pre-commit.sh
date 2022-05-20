@@ -45,7 +45,9 @@ phpCsFixer()
 {
     checkExecutable "PHP CS Fixer" $PHPCSFIXER
 
-    $PHPCSFIXER fix -q --no-interaction --allow-risky=yes
+    if ! $PHPCSFIXER fix -q --no-interaction --allow-risky=yes; then
+        fatalError "PHP CS Fixer finished with errors"
+    fi
 
     WAS_EXECUTED="$PHPCSFIXER"
 }
@@ -54,7 +56,9 @@ prettier()
 {
     checkExecutable "Prettier" $PRETTIER
 
-    $PRETTIER --loglevel=error --quiet --write .
+    if ! $PRETTIER --loglevel=error --quiet --write .; then
+        fatalError "Prettier finished with errors"
+    fi
 
     WAS_EXECUTED="$PHPCSFIXER"
 }
@@ -63,14 +67,18 @@ phpStan()
 {
     checkExecutable "PHPStan" $PHPSTAN
 
-    $PHPSTAN analyse
+    if ! $PHPSTAN analyse; then
+        fatalError "PHPStan finished with errors"
+    fi
 
     WAS_EXECUTED="$PHPCSFIXER"
 }
 
 blast()
 {
-    $BLAST
+    if ! $BLAST; then
+        fatalError "Blast finished with errors"
+    fi
 
     WAS_EXECUTED="$BLAST"
 }
@@ -89,8 +97,15 @@ checkExecutable()
 checkStatus()
 {
     if [ -z ${WAS_EXECUTED+x} ]; then
-        echo "FATAL ERROR: no commands were found for '$1'"
+        fatalError "FATAL ERROR: no commands were found for '$1'"
     fi
+}
+
+fatalError()
+{
+    echo "$1"
+
+    exit 1
 }
 
 main "$@"
