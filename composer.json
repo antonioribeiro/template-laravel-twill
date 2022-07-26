@@ -42,8 +42,12 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": ["app/Models/Enums/UserRole.php"]
     },
+    "exclude-from-classmap": [
+        "vendor/area17/twill/src/Models/Enums/UserRole.php"
+    ],
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

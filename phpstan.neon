@@ -16,8 +16,10 @@ parameters:
         - A17\Twill\Capsules\Base\Model
         - A17\TwillTransformers\Transformer
         - Illuminate\Database\Eloquent\Model
+        - Illuminate\Support\Facades\Route
 
     ignoreErrors:
+        - '#Call to an undefined static method Illuminate\\Support\\Facades#'
 
     reportUnmatchedIgnoredErrors: false
 

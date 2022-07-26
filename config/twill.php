@@ -11,6 +11,10 @@ return [
                 'name' => 'Pages',
                 'enabled' => true,
             ],
+            [
+                'name' => 'SiteUsers',
+                'enabled' => true,
+            ],
         ],
     ],
 ];

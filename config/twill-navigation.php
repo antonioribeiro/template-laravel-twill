@@ -20,6 +20,11 @@ return [
                 'title' => 'Feature Flags',
                 'route' => 'admin.config.featureFlags.index',
             ],
+            'siteUsers' => [
+                'title' => 'Users',
+                'route' => 'admin.config.siteUsers.index',
+                'can' => 'manage-users',
+            ],
         ],
     ],
 ];
