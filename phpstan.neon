@@ -13,13 +13,15 @@ parameters:
 
     universalObjectCratesClasses:
         - App\Models\Model
+        - A17\Twill\Models\Model
         - A17\Twill\Capsules\Base\Model
+        - Illuminate\Support\Facades\Route
         - A17\TwillTransformers\Transformer
         - Illuminate\Database\Eloquent\Model
-        - Illuminate\Support\Facades\Route
 
     ignoreErrors:
         - '#Call to an undefined static method Illuminate\\Support\\Facades#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder.*#'
 
     reportUnmatchedIgnoredErrors: false
 

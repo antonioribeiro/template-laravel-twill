@@ -4,11 +4,14 @@ namespace App\Twill\Capsules\SiteUsers\Http\Controllers;
 
 use A17\Twill\Http\Controllers\Admin\ModuleController as BaseModuleController;
 
+/**
+ * @property \App\Twill\Capsules\SiteUsers\Repositories\SiteUserRepository $repository
+ */
 class SiteUserController extends BaseModuleController
 {
     protected $moduleName = 'siteUsers';
 
-    protected $titleColumnKey = 'name';
+    protected $titleColumnKey = 'email';
 
     protected $indexOptions = [
         'create' => false,
@@ -29,25 +32,65 @@ class SiteUserController extends BaseModuleController
         'bulkEdit' => true,
         'editInModal' => false,
         'skipCreateModal' => false,
+        'revisions' => true,
     ];
 
     protected $indexColumns = [
-        'name' => [
-            'title' => 'Name',
-            'field' => 'name',
-            'sort' => true,
-        ],
-
         'email' => [
             'title' => 'Email',
             'field' => 'email',
             'sort' => true,
         ],
 
+        'name' => [
+            'title' => 'Name',
+            'field' => 'name',
+            'sort' => true,
+        ],
+
         'verified' => [
-            'title' => 'Verified',
+            'title' => 'Email verified',
             'field' => 'emailIsVerifiedString',
             'sort' => true,
         ],
+
+        'has_password' => [
+            'title' => 'Has password',
+            'field' => 'hasPassword',
+            'sort' => true,
+        ],
     ];
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Collection $items
+     * @param array $scopes
+     * @return array
+     */
+    protected function getIndexTableMainFilters($items, $scopes = [])
+    {
+        $statusFilters = parent::getIndexTableMainFilters($items, $scopes);
+
+        $statusFilters[] = [
+            'name' => 'Logins',
+            'slug' => 'hasLogin',
+            'number' => $this->repository->countLogins(),
+        ];
+
+        return $statusFilters;
+    }
+
+    /**
+     * @param array $prependScope
+     * @return array
+     */
+    protected function getIndexData($prependScope = [])
+    {
+        $scope = $this->getRequestFilters()['status'] ?? null;
+
+        if ($scope == 'hasLogin') {
+            $prependScope += [$scope => true];
+        }
+
+        return parent::getIndexData($prependScope);
+    }
 }
