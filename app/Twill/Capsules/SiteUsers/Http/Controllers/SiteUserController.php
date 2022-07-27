@@ -59,6 +59,12 @@ class SiteUserController extends BaseModuleController
             'field' => 'hasPassword',
             'sort' => true,
         ],
+
+        'created_at' => [
+            'title' => 'Created at',
+            'field' => 'created_at_string',
+            'sort' => true,
+        ],
     ];
 
     /**
@@ -66,7 +72,7 @@ class SiteUserController extends BaseModuleController
      * @param array $scopes
      * @return array
      */
-    protected function getIndexTableMainFilters($items, $scopes = [])
+    protected function getIndexTableMainFilters($items, $scopes = []): array
     {
         $statusFilters = parent::getIndexTableMainFilters($items, $scopes);
 
@@ -83,7 +89,7 @@ class SiteUserController extends BaseModuleController
      * @param array $prependScope
      * @return array
      */
-    protected function getIndexData($prependScope = [])
+    protected function getIndexData($prependScope = []): array
     {
         $scope = $this->getRequestFilters()['status'] ?? null;
 
@@ -92,5 +98,18 @@ class SiteUserController extends BaseModuleController
         }
 
         return parent::getIndexData($prependScope);
+    }
+
+    public function orderScope(): array
+    {
+        $orders = parent::orderScope();
+
+        if (filled($direction = $orders['created_at_string'] ?? null)) {
+            $orders['created_at'] = $direction;
+
+            unset($orders['created_at_string']);
+        }
+
+        return $orders;
     }
 }
